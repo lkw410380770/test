@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/jquery-1.10.2.js"></script>
+</head>
+<body>
+	<table border="1">
+		<thead>
+			<tr>
+				<th>选择</th>
+				<th>name</th>
+				<th>job</th>
+				<th>sex</th>
+				<th>love</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><input type="radio"></td>
+				<td><input type="text" value="刘"></td>
+				<td><input type="text" value='互联网'></td>
+				<td>
+					<select name="" id="">
+						<option value="">男</option>
+						<option value="">女</option>
+					</select>
+				</td>
+				<td>
+					<input type="checkbox" value="足球">足球
+					<input type="checkbox" value="蓝球">蓝球
+					<input type="checkbox" value="乒乓球">乒乓球
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<button class="btn">点</button>
+</body>
+	<script>
+		$('.btn').on('click',function(){
+			var JsonData = {};
+			var rows = $('thead').find('th');
+			var valuesDdata = $('tbody>tr>td');
+			var JsonData = new Object();
+			var arr = [];
+			for (var i = 1;i<valuesDdata.length; i++) {
+				var childEle = $(valuesDdata[i]).children();
+				if(childEle[0].type == 'text'){
+					JsonData[rows[i].innerHTML] = childEle.val();
+				}else if(childEle[0].type == 'checkbox'){
+					var lovestr = "";
+					for(var j=0;j<childEle.length;j++){
+						if(childEle[j].checked){
+							lovestr += childEle[j].value+',';
+						}
+					}
+					JsonData[rows[i].innerHTML] = lovestr;
+				}else{
+					var selectEle = childEle[0];
+					var index = selectEle.selectedIndex;
+					JsonData[rows[i].innerHTML] = selectEle.options[index].text;
+				}
+			}
+			arr.push(JsonData);
+			alert(JSON.stringify(arr));
+		});
+		
+	</script>
+</html>
